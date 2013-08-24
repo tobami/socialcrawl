@@ -9,6 +9,9 @@ Python 2.7.x is required, plus some python packages which can be installed by ty
 
     pip install -r requirements.txt
 
+For the job queue, you need to install a broker. Per default RabbitMQ on localhost is used:
+
+    sudo apt-get install rabbitmq-server
 
 ## Configuration
 
@@ -55,6 +58,24 @@ You can use a cached version of the scripts that use Django's ORM to cache data 
 
     python manage.py twitter twitter
     python manage.py facebook zuck
+
+## API
+
+To start the web server locally type:
+
+    python manage.py runserver
+
+Resources are:
+
+- /api/v1/networks
+- /api/v1/profiles
+  - /api/v1/profiles/<network>/
+
+## Job Queue
+
+To start locally the job queue for asynchronous profile fetching:
+
+    python manage.py celery worker --loglevel=info
 
 ## Tests
 
