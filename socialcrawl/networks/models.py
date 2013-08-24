@@ -28,3 +28,11 @@ class Profile(models.Model):
 
     class Meta:
         unique_together = ('username', 'network')
+
+    def hydrate(self):
+        return {
+            'username': self.username,
+            'name': self.name,
+            'description': self.description,
+            'popularity': self.popularity,
+        }
