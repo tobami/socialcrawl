@@ -30,3 +30,19 @@ class TestNetworks(BaseTest):
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
         self.assertEqual(len(data), len(Profile.SOCIAL_NETWORKS))
+
+
+class TestProfiles(BaseTest):
+
+    def setUp(self):
+        super(TestProfiles, self).setUp()
+        Profile(username='twitter', network='T', description='Cached for T').save()
+        Profile(username='twitter', network='F', description='Cached for F').save()
+
+    def test_profiles_list(self):
+        """Should return a list of profiles when present in DB for a given network"""
+        resp = self.client.get('/api/v1/profiles/twitter')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data), 1)
+        self.assertEqual(data[0]['description'], 'Cached for T')
