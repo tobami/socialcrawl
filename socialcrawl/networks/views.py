@@ -1,10 +1,13 @@
-import json
-
-from django.http import HttpResponse
-
-CONTENT_TYPE = 'application/json'
+from socialcrawl.networks.models import Profile
+from socialcrawl.networks.api import APIResponse
 
 
 def notfound(request):
-    message = json.dumps({'error': 'Not Found'})
-    return HttpResponse(message, status=404, content_type=CONTENT_TYPE)
+    return APIResponse({'error': 'Not Found'}, status=404)
+
+
+def networks(request):
+    data = [
+        {'name': n[1].lower()} for n in Profile.SOCIAL_NETWORKS
+    ]
+    return APIResponse(data)

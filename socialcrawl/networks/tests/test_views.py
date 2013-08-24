@@ -3,6 +3,8 @@ import json
 from django.test import TestCase
 from django.test.client import Client
 
+from socialcrawl.networks.models import Profile
+
 
 class BaseTest(TestCase):
 
@@ -18,3 +20,13 @@ class TestNotFound(BaseTest):
         resp = self.client.get('/api/badurl/')
         self.assertEqual(resp.status_code, 404)
         self.assertEqual(resp.content, json.dumps({'error': 'Not Found'}))
+
+
+class TestNetworks(BaseTest):
+
+    def test_network_list(self):
+        """Should return a list of supported networks when calling /networks"""
+        resp = self.client.get('/api/v1/networks')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data), len(Profile.SOCIAL_NETWORKS))
