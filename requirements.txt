@@ -1,2 +1,3 @@
 twython==3.0
 facepy==0.8
+django==1.5
