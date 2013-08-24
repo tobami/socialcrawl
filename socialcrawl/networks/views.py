@@ -13,10 +13,17 @@ def networks(request):
     return APIResponse(data)
 
 
-def profile_list(request, network):
+def profiles(request, network, username=None):
     if network not in SUPPORTED_NETWORKS:
         APIResponse({'error': 'Network Not Supported'}, status=404)
     else:
         network = network[0].upper()
-    profiles = Profile.objects.filter(network=network)
-    return APIResponse(profiles)
+    if username:
+        try:
+            data = Profile.objects.get(username=username, network=network)
+        except:
+            raise
+        return APIResponse(data)
+    else:
+        data = Profile.objects.filter(network=network)
+        return APIResponse(data)

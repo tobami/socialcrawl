@@ -46,3 +46,10 @@ class TestProfiles(BaseTest):
         data = json.loads(resp.content)
         self.assertEqual(len(data), 1)
         self.assertEqual(data[0]['description'], 'Cached for T')
+
+    def test_profiles_cached(self):
+        """Should return profile when found in DB"""
+        resp = self.client.get('/api/v1/profiles/twitter/twitter')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(data['description'], 'Cached for T')
