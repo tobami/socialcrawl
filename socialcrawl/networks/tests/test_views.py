@@ -53,3 +53,10 @@ class TestProfiles(BaseTest):
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
         self.assertEqual(data['description'], 'Cached for T')
+
+    def test_profiles_not_cached(self):
+        """Should return 202 and enqueue job when profile not found in DB"""
+        resp = self.client.get('/api/v1/profiles/facebook/zuck')
+        self.assertEqual(resp.status_code, 202)
+        data = json.loads(resp.content)
+        self.assertEqual(data['status'], 'processing')

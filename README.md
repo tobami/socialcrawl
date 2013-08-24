@@ -67,9 +67,9 @@ To start the web server locally type:
 
 Resources are:
 
-- /api/v1/networks
-- /api/v1/profiles
-  - /api/v1/profiles/<network>/
+- `/api/v1/networks`
+- `/api/v1/profiles`
+  - `/api/v1/profiles/<network>`
 
 ## Job Queue
 
